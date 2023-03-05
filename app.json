@@ -14,17 +14,36 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "jsEngine": "hermes",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "jsEngine": "jsc",
+      "bundleIdentifier": "com.tristramit.fruitspecmanualcaliper"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.tristramit.fruitspecmanualcaliper"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ec87dc80-3ca1-4b39-81ae-08491fb529a0"
+      }
+    },
+    "owner": "tristramit",
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location.",
+          "isAndroidBackgroundLocationEnabled": true
+        }
+      ]
+    ]
   }
 }
