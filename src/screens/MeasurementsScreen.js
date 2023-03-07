@@ -1,24 +1,42 @@
+
 import React, { useState } from 'react';
-import { Pressable, View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, TextInput, TouchableOpacity, Keyboard, Platform, Vibration } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, TextInput, TouchableOpacity, Keyboard, Platform, Vibration } from 'react-native';
 //import { NavigationContainer } from '@react-navigation/native';
 //import { createDrawerNavigator } from '@react-navigation/drawer';
 import { extractNumbers, average } from '../utils/functions.js';
 import Size from '../components/Size.js';
+import { SettingsScreen } from './SettingsScreen.js';
 
 
 
 
-export function MeasurementsScreen({ navigation }) {
+export function MeasurementsScreen(props) {
     const [size, setSize] = useState();
     const [sizeItems, setSizeItems] = useState([]);
+
   
   
     const handleAddSize = () => {
       {/*Keyboard.dismiss();*/}
-      setSizeItems([...sizeItems, extractNumbers(size)])
-      //Vibration.vibrate(50);
+      setSizeItems([...sizeItems, extractNumbers(size)]);
+      
+      if (props.state.vibrate) {
+        Vibration.vibrate(100);
+      }
+      if (props.sound) {
+        //play sound
+      }
+      if (props.flash) {
+        //flash screen
+      }
+
       setSize(null);
+      console.log('vibrate is: ' + props.state.vibrate);
+      console.log('sound is: ' + props.state.sound);
+      console.log('flash is: ' + props.state.flash);
     }
+
+      
   
     const completeSize = (index) => {
       let itemsCopy = [...sizeItems];
@@ -29,19 +47,7 @@ export function MeasurementsScreen({ navigation }) {
     return (
 
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        {/* <Text>Measurements Screen</Text>
-        <Pressable
-            onPress={() => navigation.navigate('Settings')}
-            style={({ pressed }) => [
-            {
-                backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'white'
-            },
-            styles.button
-            ]}
-        >
-            <Text style={styles.text}>Go to settings screen</Text>
-        </Pressable> */}
-              {/* Added this scroll view to enable scrolling when list gets longer than the page */}
+
     <ScrollView
       contentContainerStyle={{
         flexGrow: 1
@@ -72,7 +78,6 @@ export function MeasurementsScreen({ navigation }) {
       
     </ScrollView>
 
-    {/* Write a measurement */}
     <KeyboardAvoidingView 
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.writeSizeWrapper}
@@ -82,14 +87,9 @@ export function MeasurementsScreen({ navigation }) {
       style={styles.input} 
       value={size}
       onChangeText={text => setSize((text))}
-      //onSubmitEditing={text => setSize((text))}
       autoFocus={true} 
       showSoftInputOnFocus={false} /> 
-      {/* <TouchableOpacity onPress={() => handleAddSize()}>
-        <View style={styles.addWrapper}>
-          <Text style={styles.addText}>+</Text>
-        </View>
-      </TouchableOpacity> */}
+
     </KeyboardAvoidingView>
     
   </View>

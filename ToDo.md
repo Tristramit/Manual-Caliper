@@ -4,13 +4,11 @@
 
 ## Objectives
 
-- ## Settings
+- ## Settings Screen
+  - ** Move States to Redux **
 
-    - **Add settings drawer**
-    Links
-    https://react-navigation-example.netlify.app/drawer-view
-    https://docs.expo.dev/guides/routing-and-navigation/
-    https://reactnavigation.org/
+
+
 
 
 
@@ -19,6 +17,9 @@
     https://reactnative.dev/docs/vibration
 
 
+- ## Measurements screen
+   - Hide / Unhide input according to the state of the switches in the settings screen
+   -  Remove unused styles
 
 - ## Permissions Pages and Splash Screen
 
@@ -34,6 +35,10 @@
 
 ##Questions and unresolved bugs
   - ## Why can't I export default?
+
+
+## Ideas
+  - ## Show normal distribution?
 
 
 
@@ -62,12 +67,11 @@
 
 - ~~Connect to BT Caliper~~
 
-- Record every sample and write it on the screen
+~~- Record every sample and write it on the screen~~
 
-- Correct caliper typos
+~~- Correct caliper typos~~
 
-- Show average fruit size on screen
-
+~~- Show average fruit size on screen~~
 - ~~Show # of samples~~
 
 - “send” will upload the data

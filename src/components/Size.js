@@ -1,3 +1,10 @@
+//====================================================================To Do: ====================================================================
+// 1. Add a button to the right of the size/Swipe left that will allow the user to delete the size and update the average
+// 2. Remove unused styles
+//
+
+// ===============================================================================================================================================
+
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
