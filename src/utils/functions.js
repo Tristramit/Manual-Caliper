@@ -23,3 +23,40 @@ export function average(arr) {
     const avg = (sum / arr.length).toFixed(2) || 0;
     return avg;
   }
+
+
+
+//Flash screen function
+export function flashScreen() {
+  console.log('flash screen');
+}
+
+
+//Play Sound function
+
+import { Audio } from 'expo-av';
+
+export async function playSound() {
+  try {
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      // interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      shouldDuckAndroid: true,
+      //interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      playThroughEarpieceAndroid: false,
+      staysActiveInBackground: true,
+    });
+
+    const { sound } = await Audio.Sound.createAsync(
+      require('/home/amos/Documents/Code/fruitspec-manual-caliper/src/components/bell.mp3'),
+      { shouldPlay: false, volume: 1.0 }
+    );
+
+    await sound.playAsync();
+    await sound.unloadAsync();
+  } catch (error) {
+    console.log('Error playing sound', error);
+  }
+}
+

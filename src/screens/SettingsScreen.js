@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Switch } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import SwitchComponent from '../components/SwitchComponent';
 //import config from '../config/config.json';
+import { StatusBar } from 'expo-status-bar';
+//import styles from '../utils/styles';
 
 
 

@@ -30,7 +30,7 @@
   - https://docs.expo.dev/versions/latest/sdk/sharing/
 
 - ## Splash Screen
-  - https://docs.expo.dev/versions/v48.0.0/sdk/splash-screen/
+  -~~ https://docs.expo.dev/versions/v48.0.0/sdk/splash-screen/~~
 
 
 ##Questions and unresolved bugs

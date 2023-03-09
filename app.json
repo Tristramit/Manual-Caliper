@@ -4,10 +4,10 @@
     "slug": "fruitspec-manual-caliper",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/img/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/img/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,19 +22,20 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/img/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.tristramit.fruitspecmanualcaliper"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/img/favicon.png"
     },
     "extra": {
       "eas": {
         "projectId": "ec87dc80-3ca1-4b39-81ae-08491fb529a0"
       }
     },
+    "userInterfaceStyle": "automatic",
     "owner": "tristramit",
     "plugins": [
       [

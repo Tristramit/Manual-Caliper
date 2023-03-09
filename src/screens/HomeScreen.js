@@ -1,31 +1,25 @@
-import * as React from 'react';
-import { Pressable, View, Text, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import * as React from "react";
+import { Pressable, View, Text, StyleSheet } from "react-native";
+import { Button } from "react-native-web";
+import { useNavigation } from "@react-navigation/native";
+import SoundComponent from "../components/SoundComponent";
 
+export function HomeScreen() {
+  const navigation = useNavigation();
 
-
-export function HomeScreen({ navigation }) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-        
-      </View>
-    );
-  }
+  return (
+    <View style={container}>
+      <Text>Home Screen</Text>
+      {/* <Button title="Go to Settings" onPress={() => navigation.navigate('Settings')} /> */}
+      <SoundComponent />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
-    text: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: 'white',
-    },
-    button: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 4,
-        elevation: 3,
-        backgroundColor: 'blue',
-    },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
