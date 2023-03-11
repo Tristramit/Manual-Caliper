@@ -2,9 +2,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, Vibration } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import * as SplashScreen from 'expo-splash-screen';
-//Components
-import Size from './src/components/Size';
 //Screens
 import { HomeScreen } from './src/screens/HomeScreen.js';
 import { SettingsScreen } from './src/screens/SettingsScreen.js'; 
@@ -36,13 +33,15 @@ export default function App() {
       setState({...state, darkMode: !state.darkMode});
     },
   };
+
+  
   
 
   return (
     
     <View style={styles.container}>
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Measurements">
+      <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Settings">{props => <SettingsScreen {...props} state={state} handlers={handlers} />}</Drawer.Screen>
         <Drawer.Screen name="Measurements">{props => <MeasurementsScreen {...props} state={state} />}</Drawer.Screen>

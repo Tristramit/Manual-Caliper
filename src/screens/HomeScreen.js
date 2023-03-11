@@ -2,7 +2,7 @@ import * as React from "react";
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-web";
 import { useNavigation } from "@react-navigation/native";
-
+import DistributionGraph from "../components/DistributionGraph";
 
 export function HomeScreen() {
   const navigation = useNavigation();
@@ -10,6 +10,7 @@ export function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
+      <DistributionGraph />
     </View>
   );
 }
