@@ -15,7 +15,9 @@ const Size = (props) => {
       onPress={() => props.deleteSize(props.index)}>
     <View style={styles.item}>
       <View style={styles.itemLeft}>
-        <Text style={styles.itemText}>{props.text}</Text>
+        <Text style={styles.itemText} numberOfLines={1} >{props.text}</Text>
+      </View>
+      <View style={styles.itemLeft}>
         <Text style={styles.itemText}>{props.location}</Text>
       </View>
     </View>
@@ -27,23 +29,57 @@ const Size = (props) => {
 
 
 
+// const styles = StyleSheet.create({
+//   item: {
+//     backgroundColor: '#FFF',
+//     padding: 15,
+//     borderRadius: 10,
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     justifyContent: 'space-between',
+//     marginBottom: 2,
+//   },
+//   itemLeft: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     // flexWrap: 'wrap'
+//   },
+//   itemText: {
+//     maxWidth: '80%',
+//     textAlign: 'right',
+//   },
+// });
+
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#ffffff',
     padding: 15,
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   itemLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    marginRight: 20,
+    
   },
   itemText: {
-    maxWidth: '80%',
+    maxWidth: '93%',
+    fontSize: 16,
+    marginBottom: 5,
+    marginRight: 10,
   },
 });
 

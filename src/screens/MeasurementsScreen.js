@@ -13,14 +13,18 @@ import {
 } from "react-native";
 import { extractNumbers, average } from "../utils/functions.js";
 import Size from "../components/Size.js";
-import playSound from "../utils/playSound.js";
 import * as Location from "expo-location";
+import { set } from "react-native-reanimated";
 
 export function MeasurementsScreen(props) {
   const [size, setSize] = useState();
   const [sizeItems, setSizeItems] = useState([]);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+
+ // let audio = new Audio("../assets/sounds/bell.mp3")
+//  const [locationText, setLocationText] = useState();
+
 
   //Get Location
   useEffect(() => {
@@ -30,29 +34,22 @@ export function MeasurementsScreen(props) {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
     })();
   }, []);
 
-  let locationText = 'Waiting..';
-  if (errorMsg) {
-      locationText = errorMsg;
-    console.log(errorMsg);
-  } else if (location) {
-    let locationText = JSON.stringify(location);
-    console.log(locationText);
-  }
-
   //Handlers
 
-  const handleAddSize = () => {
-    setSizeItems([...sizeItems, [extractNumbers(size), locationText]]);  
-
-    if(locationText){
-
-    }
+  const handleAddSize = async () => {
+    let location = await Location.getCurrentPositionAsync({});
+    location = JSON.parse(JSON.stringify(location));
+    lat = location.coords.latitude
+    long = location.coords.longitude
+    location = 'Latitude: ' + lat + ' Longitude: ' + long
+    console.log(location)
+    setLocation(location)
+    setSizeItems([...sizeItems, [extractNumbers(size), location]]);
+    console.log(sizeItems);
+   
     if (props.state.vibrate) {
       Vibration.vibrate(100);
     }
@@ -83,17 +80,19 @@ export function MeasurementsScreen(props) {
         <View style={styles.sizesWrapper}>
           <Text style={styles.sectionTitle}>Measurements</Text>
           <Text>Number of samples is: {sizeItems.length}</Text>
-          <Text>The Current Average is: {average(sizeItems)} </Text>
+          <Text>The Current Average is: {average(sizeItems.map(subarray=>subarray[0]))} </Text>
           <View style={styles.items}>
             {/* This is where the sizes will go */}
             {sizeItems.map((item, index) => {
               return (
           
-                  <Size text={item[0]} location={item[1]} key={index} deleteSize={deleteSize} />
+                  <Size text={item[0]} key={index} location={item[1]} deleteSize={deleteSize} />
                 
               );
             })}
           </View>
+         
+          
         </View>
       </ScrollView>
 
@@ -119,13 +118,16 @@ const styles = StyleSheet.create({
   sizesWrapper: {
     paddingTop: 80,
     paddingHorizontal: 20,
+    alignItems: "center",
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: "bold",
+    
   },
   items: {
     marginTop: 30,
+    
   },
   writeSizeWrapper: {
     position: "absolute",

@@ -1,5 +1,5 @@
 {
-    "vibrate": true,
+    "vibrate": false,
     "sound": false,
     "flash": false,
     "darkMode": true
