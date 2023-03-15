@@ -18,6 +18,7 @@ const config = require('./src/config/config.json');
 
 export default function App() {
   const [state, setState] = useState(config);
+
   
   const handlers = {
     handleVibrate: () => {
@@ -31,8 +32,11 @@ export default function App() {
     },
     handleDarkMode: () => {
       setState({...state, darkMode: !state.darkMode});
-    },
+    }
   };
+  
+
+  
 
   
   
