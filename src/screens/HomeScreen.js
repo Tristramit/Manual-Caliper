@@ -9,7 +9,6 @@ export function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
       <DistributionGraph />
     </View>
   );

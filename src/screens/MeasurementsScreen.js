@@ -14,7 +14,8 @@ import {
 import { extractNumbers, average } from "../utils/functions.js";
 import Size from "../components/Size.js";
 import * as Location from "expo-location";
-import { set } from "react-native-reanimated";
+import * as Sharing from 'expo-sharing';
+
 
 export function MeasurementsScreen(props) {
   const [size, setSize] = useState();
@@ -22,8 +23,6 @@ export function MeasurementsScreen(props) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
- // let audio = new Audio("../assets/sounds/bell.mp3")
-//  const [locationText, setLocationText] = useState();
 
 
   //Get Location
@@ -45,10 +44,10 @@ export function MeasurementsScreen(props) {
     lat = location.coords.latitude
     long = location.coords.longitude
     location = 'Latitude: ' + lat + ' Longitude: ' + long
-    console.log(location)
     setLocation(location)
-    setSizeItems([...sizeItems, [extractNumbers(size), location]]);
-    console.log(sizeItems);
+    // setSizeItems([...sizeItems, [extractNumbers(size), location]]);
+    setSizeItems([...sizeItems, [extractNumbers(size), lat, long]]);
+    console.log('SizeItems: ',sizeItems);
    
     if (props.state.vibrate) {
       Vibration.vibrate(100);
