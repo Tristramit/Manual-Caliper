@@ -1,7 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, Vibration} from "react-native";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Keyboard,
+  ScrollView,
+  Vibration,
+} from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import * as Sharing from "expo-sharing";
+import * as Location from "expo-location";
+
 //Screens
 import { HomeScreen } from "./src/screens/HomeScreen.js";
 import { SettingsScreen } from "./src/screens/SettingsScreen.js";
@@ -17,6 +29,10 @@ const config = require("./src/config/config.json");
 
 export default function App() {
   const [settingState, setSettingState] = useState(config);
+  const [size, setSize] = useState();
+  const [sizeItems, setSizeItems] = useState([]);
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const handlers = {
     handleVibrate: () => {
@@ -33,10 +49,59 @@ export default function App() {
     },
   };
 
+  const handleAddSize = async () => {
+    let location = await Location.getCurrentPositionAsync({});
+    location = JSON.parse(JSON.stringify(location));
+    lat = location.coords.latitude;
+    long = location.coords.longitude;
+    location = "Latitude: " + lat + " Longitude: " + long;
+    setLocation(location);
+    // setSizeItems([...sizeItems, [extractNumbers(size), location]]);
+    setSizeItems([...sizeItems, [extractNumbers(size), lat, long]]);
+    console.log("SizeItems: ", sizeItems);
+    if (settingState.vibrate) {
+      Vibration.vibrate(100);
+    }
+    //if (props.settingsState.sound) {
+    //play sound
+    //}
+    if (settingState.flash) {
+      //flash screen
+    }
+
+    setSize(null);
+  };
+
+  const deleteSize = (index) => {
+    let itemsCopy = [...sizeItems];
+    itemsCopy.splice(index, 1);
+    setSizeItems(itemsCopy);
+  };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+    })();
+  }, []);
+
+  const itemsLength = sizeItems.length;
+  const itemsAverage = average(sizeItems.map(subarray=>subarray[0]))
+  // const sizeItemsList =sizeItems.map((item, index) => {
+  //   return (
+
+  //       <Size text={item[0]} key={index} location={item[1]} deleteSize={deleteSize} />
+      
+  //   );
+  // })
+
   return (
     <View style={styles.container}>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Navigator initialRouteName="Measurements">
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Share" component={ShareScreen} />
           <Drawer.Screen name="Settings">
@@ -49,7 +114,21 @@ export default function App() {
             )}
           </Drawer.Screen>
           <Drawer.Screen name="Measurements">
-            {(props) => <MeasurementsScreen {...props} state={settingState} />}
+            {(props) => (
+              <MeasurementsScreen
+                {...props}
+                settingState={settingState}
+                handleAddSize={handleAddSize}
+                deleteSize={deleteSize}
+                itemsLength={itemsLength}
+                itemsAverage={itemsAverage}
+                sizeItems={sizeItems}
+                location={location}
+                size={size}
+                setSize={setSize}
+                // sizeItemsList={sizeItemsList}
+              />
+            )}
           </Drawer.Screen>
         </Drawer.Navigator>
       </NavigationContainer>

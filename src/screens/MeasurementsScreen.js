@@ -13,63 +13,61 @@ import {
 } from "react-native";
 import { extractNumbers, average } from "../utils/functions.js";
 import Size from "../components/Size.js";
-import * as Location from "expo-location";
-import * as Sharing from 'expo-sharing';
 
 
 export function MeasurementsScreen(props) {
-  const [size, setSize] = useState();
-  const [sizeItems, setSizeItems] = useState([]);
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
+  // const [size, setSize] = useState();
+  // const [sizeItems, setSizeItems] = useState([]);
+  // const [location, setLocation] = useState(null);
+  // const [errorMsg, setErrorMsg] = useState(null);
 
 
 
   //Get Location
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== "granted") {
+  //       setErrorMsg("Permission to access location was denied");
+  //       return;
+  //     }
+  //   })();
+  // }, []);
 
   //Handlers
 
-  const handleAddSize = async () => {
-    let location = await Location.getCurrentPositionAsync({});
-    location = JSON.parse(JSON.stringify(location));
-    lat = location.coords.latitude
-    long = location.coords.longitude
-    location = 'Latitude: ' + lat + ' Longitude: ' + long
-    setLocation(location)
-    // setSizeItems([...sizeItems, [extractNumbers(size), location]]);
-    setSizeItems([...sizeItems, [extractNumbers(size), lat, long]]);
-    console.log('SizeItems: ',sizeItems);
+  // const handleAddSize = async () => {
+  //   let location = await Location.getCurrentPositionAsync({});
+  //   location = JSON.parse(JSON.stringify(location));
+  //   lat = location.coords.latitude
+  //   long = location.coords.longitude
+  //   location = 'Latitude: ' + lat + ' Longitude: ' + long
+  //   setLocation(location)
+  //   // setSizeItems([...sizeItems, [extractNumbers(size), location]]);
+  //   setSizeItems([...sizeItems, [extractNumbers(size), lat, long]]);
+  //   console.log('SizeItems: ',sizeItems);
    
-    if (props.state.vibrate) {
-      Vibration.vibrate(100);
-    }
-    //if (props.sound) {
-    //play sound
-    //}
-    if (props.flash) {
-      //flash screen
-    }
+  //   if (settingState.vibrate) {
+  //     Vibration.vibrate(100);
+  //   }
+  //   //if (props.settingState.sound) {
+  //   //play sound
+  //   //}
+  //   if (settingState.flash) {
+  //     //flash screen
+  //   }
 
-    setSize(null);
-  };
+  //   setSize(null);
+  // };
 
-  const deleteSize = (index) => {
-    let itemsCopy = [...sizeItems];
-    itemsCopy.splice(index, 1);
-    setSizeItems(itemsCopy);
-  };
-
+  // const deleteSize = (index) => {
+  //   let itemsCopy = [...sizeItems];
+  //   itemsCopy.splice(index, 1);
+  //   setSizeItems(itemsCopy);
+  // };
+  
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={styles.container}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -78,17 +76,18 @@ export function MeasurementsScreen(props) {
       >
         <View style={styles.sizesWrapper}>
           <Text style={styles.sectionTitle}>Measurements</Text>
-          <Text>Number of samples is: {sizeItems.length}</Text>
-          <Text>The Current Average is: {average(sizeItems.map(subarray=>subarray[0]))} </Text>
+          <Text>Number of samples is: {props.sizeItems.length} </Text>
+          <Text>The Current Average is: {props.itemsAverage} </Text>
           <View style={styles.items}>
             {/* This is where the sizes will go */}
-            {sizeItems.map((item, index) => {
+            {props.sizeItems.map((item, index) => {
               return (
           
-                  <Size text={item[0]} key={index} location={item[1]} deleteSize={deleteSize} />
+                  <Size text={item[0]} key={index} location={item[1]} deleteSize={props.deleteSize} />
                 
               );
             })}
+            {props.sizeItemsList}
           </View>
          
           
@@ -98,13 +97,13 @@ export function MeasurementsScreen(props) {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeSizeWrapper}
-        onSubmitEditing={() => handleAddSize()}
+        onSubmitEditing={() => props.handleAddSize()}
       >
         <TextInput
           blurOnSubmit={false}
           style={styles.input}
-          value={size}
-          onChangeText={(text) => setSize(text)}
+          value={props.size}
+          onChangeText={(text) => props.setSize(text)}
           autoFocus={true}
           showSoftInputOnFocus={false}
         />
@@ -119,6 +118,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: "center",
   },
+  container: {
+    flex: 1, 
+    alignItems: "center", 
+    justifyContent: "center" },
+
   sectionTitle: {
     fontSize: 24,
     fontWeight: "bold",

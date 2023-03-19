@@ -45,7 +45,7 @@ const binArray = Object.keys(bins).map((item) => Number(item));
 
 
 
-export default function DistributionGraph() {
+export default function DistributionGraph(props) {
   
   return (
     <View style={styles.container}>
