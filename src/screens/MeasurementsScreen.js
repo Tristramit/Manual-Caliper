@@ -11,61 +11,11 @@ import {
   Platform,
   Vibration,
 } from "react-native";
-import { extractNumbers, average } from "../utils/functions.js";
 import Size from "../components/Size.js";
 
 
 export function MeasurementsScreen(props) {
-  // const [size, setSize] = useState();
-  // const [sizeItems, setSizeItems] = useState([]);
-  // const [location, setLocation] = useState(null);
-  // const [errorMsg, setErrorMsg] = useState(null);
 
-
-
-  //Get Location
-  // useEffect(() => {
-  //   (async () => {
-  //     let { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== "granted") {
-  //       setErrorMsg("Permission to access location was denied");
-  //       return;
-  //     }
-  //   })();
-  // }, []);
-
-  //Handlers
-
-  // const handleAddSize = async () => {
-  //   let location = await Location.getCurrentPositionAsync({});
-  //   location = JSON.parse(JSON.stringify(location));
-  //   lat = location.coords.latitude
-  //   long = location.coords.longitude
-  //   location = 'Latitude: ' + lat + ' Longitude: ' + long
-  //   setLocation(location)
-  //   // setSizeItems([...sizeItems, [extractNumbers(size), location]]);
-  //   setSizeItems([...sizeItems, [extractNumbers(size), lat, long]]);
-  //   console.log('SizeItems: ',sizeItems);
-   
-  //   if (settingState.vibrate) {
-  //     Vibration.vibrate(100);
-  //   }
-  //   //if (props.settingState.sound) {
-  //   //play sound
-  //   //}
-  //   if (settingState.flash) {
-  //     //flash screen
-  //   }
-
-  //   setSize(null);
-  // };
-
-  // const deleteSize = (index) => {
-  //   let itemsCopy = [...sizeItems];
-  //   itemsCopy.splice(index, 1);
-  //   setSizeItems(itemsCopy);
-  // };
-  
   return (
     <View style={styles.container}>
       <ScrollView
