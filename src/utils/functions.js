@@ -60,3 +60,5 @@ export async function playSound() {
   }
 }
 
+export function sizesArray (SizesList) {
+  return SizesList.map((subarray) => subarray[0])}

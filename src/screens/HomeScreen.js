@@ -4,12 +4,12 @@ import { Button } from "react-native-web";
 import { useNavigation } from "@react-navigation/native";
 import DistributionGraph from "../components/DistributionGraph";
 
-export function HomeScreen() {
+export function HomeScreen(props) {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <DistributionGraph />
+      <DistributionGraph values={props.sizeItems}/>
     </View>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useContext, createContext } from "react";
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -18,14 +18,15 @@ import * as Location from "expo-location";
 import { HomeScreen } from "./src/screens/HomeScreen.js";
 import { SettingsScreen } from "./src/screens/SettingsScreen.js";
 import { MeasurementsScreen } from "./src/screens/MeasurementsScreen.js";
-import { ShareScreen } from "./src/screens/SharingScreen.js";
+import { ShareScreen } from "./src/screens/ShareScreen.js";
 import { NavigationContainer } from "@react-navigation/native";
 //Utils
-import { extractNumbers, average } from "./src/utils/functions.js";
+import { extractNumbers, average, sizesArray } from "./src/utils/functions.js";
 //import styles from './src/utils/styles';
 
 const Drawer = createDrawerNavigator();
 const config = require("./src/config/config.json");
+const SizeContext = createContext()
 
 export default function App() {
   const [settingState, setSettingState] = useState(config);
@@ -87,23 +88,20 @@ export default function App() {
       }
     })();
   }, []);
-
   const itemsLength = sizeItems.length;
-  const itemsAverage = average(sizeItems.map(subarray=>subarray[0]))
-  // const sizeItemsList =sizeItems.map((item, index) => {
-  //   return (
-
-  //       <Size text={item[0]} key={index} location={item[1]} deleteSize={deleteSize} />
-      
-  //   );
-  // })
+  const itemsAverage = average(sizesArray(sizeItems));
+ 
 
   return (
     <View style={styles.container}>
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Measurements">
-          <Drawer.Screen name="Home" component={HomeScreen} />
-          <Drawer.Screen name="Share" component={ShareScreen} />
+          <Drawer.Screen name="Home">
+            {(props) => <HomeScreen {...props} sizeItems={sizeItems} />}
+          </Drawer.Screen>
+          <Drawer.Screen name="Share">
+            {(props) => <ShareScreen {...props} sizeItems={sizeItems} />}
+          </Drawer.Screen>
           <Drawer.Screen name="Settings">
             {(props) => (
               <SettingsScreen
@@ -126,7 +124,6 @@ export default function App() {
                 location={location}
                 size={size}
                 setSize={setSize}
-                // sizeItemsList={sizeItemsList}
               />
             )}
           </Drawer.Screen>

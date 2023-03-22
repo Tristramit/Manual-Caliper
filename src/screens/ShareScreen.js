@@ -14,6 +14,8 @@ export function ShareScreen() {
   37.82,39.4624999,-0.3726951
   54.13,39.4624999,-0.3726951`;
 
+  
+
   useEffect(() => {
     Sharing.isAvailableAsync().then((available) => {
       if (available) {
