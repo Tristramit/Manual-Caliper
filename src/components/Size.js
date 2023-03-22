@@ -4,62 +4,39 @@
 
 // ===============================================================================================================================================
 
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const Size = (props) => {
-
+  const index = props.id;
   return (
-    <TouchableOpacity 
-      key={props.index}
-      onPress={() => props.deleteSize(props.index)}>
-    <View style={styles.item}>
-      <View style={styles.itemLeft}>
-        <Text style={styles.itemText} numberOfLines={1} >{props.text}</Text>
+    <TouchableOpacity key={props.id} onPress={() => props.deleteSize(props.id)}>
+      <View style={styles.item}>
+        <View style={styles.itemLeft}>
+          <Text style={styles.itemSize} numberOfLines={1}>
+            {props.text}
+          </Text>
+        </View>
+        <View style={styles.itemLeft}>
+          <Text style={styles.itemText}>{props.longitude}</Text>
+          <Text style={styles.itemText}>{props.latitude}</Text>
+          <Text style={styles.itemText}>{props.id}</Text>
+        </View>
       </View>
-      <View style={styles.itemLeft}>
-        <Text style={styles.itemText}>{props.location}</Text>
-      </View>
-    </View>
     </TouchableOpacity>
-  )
-}
-
-
-
-
-
-// const styles = StyleSheet.create({
-//   item: {
-//     backgroundColor: '#FFF',
-//     padding: 15,
-//     borderRadius: 10,
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     justifyContent: 'space-between',
-//     marginBottom: 2,
-//   },
-//   itemLeft: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     // flexWrap: 'wrap'
-//   },
-//   itemText: {
-//     maxWidth: '80%',
-//     textAlign: 'right',
-//   },
-// });
+  );
+};
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     padding: 15,
     borderRadius: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 2,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -69,14 +46,19 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   itemLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
     marginRight: 20,
-    
   },
   itemText: {
-    maxWidth: '93%',
+    maxWidth: "93%",
+    fontSize: 8,
+    marginBottom: 5,
+    marginRight: 10,
+  },
+  itemSize: {
+    maxWidth: "93%",
     fontSize: 16,
     marginBottom: 5,
     marginRight: 10,

@@ -1,3 +1,4 @@
+//React
 import React, { useCallback, useEffect, useState, useContext, createContext } from "react";
 import {
   KeyboardAvoidingView,
@@ -11,6 +12,7 @@ import {
   Vibration,
 } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+
 import * as Sharing from "expo-sharing";
 import * as Location from "expo-location";
 
@@ -20,20 +22,28 @@ import { SettingsScreen } from "./src/screens/SettingsScreen.js";
 import { MeasurementsScreen } from "./src/screens/MeasurementsScreen.js";
 import { ShareScreen } from "./src/screens/ShareScreen.js";
 import { NavigationContainer } from "@react-navigation/native";
+
+
 //Utils
-import { extractNumbers, average, sizesArray } from "./src/utils/functions.js";
-//import styles from './src/utils/styles';
+import { extractNumbers, average, sizesArray, currentTimeString } from "./src/utils/functions.js";
+//import styles from './src/utils/styles'; Should make a styles file and import it here. 
+
 
 const Drawer = createDrawerNavigator();
 const config = require("./src/config/config.json");
 const SizeContext = createContext()
 
 export default function App() {
+
+//States
   const [settingState, setSettingState] = useState(config);
   const [size, setSize] = useState();
   const [sizeItems, setSizeItems] = useState([]);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+
+
+//Handlers
 
   const handlers = {
     handleVibrate: () => {
@@ -57,9 +67,9 @@ export default function App() {
     long = location.coords.longitude;
     location = "Latitude: " + lat + " Longitude: " + long;
     setLocation(location);
-    // setSizeItems([...sizeItems, [extractNumbers(size), location]]);
-    setSizeItems([...sizeItems, [extractNumbers(size), lat, long]]);
-    console.log("SizeItems: ", sizeItems);
+    setSizeItems([...sizeItems, [extractNumbers(size), lat, long, currentTimeString()]]);
+
+
     if (settingState.vibrate) {
       Vibration.vibrate(100);
     }
@@ -73,12 +83,22 @@ export default function App() {
     setSize(null);
   };
 
-  const deleteSize = (index) => {
-    let itemsCopy = [...sizeItems];
-    itemsCopy.splice(index, 1);
-    setSizeItems(itemsCopy);
+  // const deleteSize = (index) => {
+  //   let itemsCopy = [...sizeItems];
+  //   itemsCopy.splice(index, 1);
+  //   setSizeItems(itemsCopy);
+  // };
+
+  // const deleteSize = (id) => {
+  //   console.log("Delete size called with id:", id);
+  //   setSizeItems(sizeItems.filter((sizeItems) => sizeItems.id !== id));
+  // };
+  const deleteSize = (id) => {
+    setSizeItems(sizeItems.filter((sizeItems) => sizeItems[3] !== id));
   };
 
+
+//Effects
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -88,6 +108,8 @@ export default function App() {
       }
     })();
   }, []);
+
+//Constants
   const itemsLength = sizeItems.length;
   const itemsAverage = average(sizesArray(sizeItems));
  

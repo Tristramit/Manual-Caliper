@@ -12,6 +12,7 @@ import {
   Vibration,
 } from "react-native";
 import Size from "../components/Size.js";
+import { currentTimeString } from "../utils/functions.js";
 
 
 export function MeasurementsScreen(props) {
@@ -30,10 +31,10 @@ export function MeasurementsScreen(props) {
           <Text>The Current Average is: {props.itemsAverage} </Text>
           <View style={styles.items}>
             {/* This is where the sizes will go */}
-            {props.sizeItems.map((item, index) => {
+            {props.sizeItems.map((item) => {
               return (
           
-                  <Size text={item[0]} key={index} location={item[1]} deleteSize={props.deleteSize} />
+                  <Size text={item[0]} key={item[3]} id={item[3]} longitude={item[1]} latitude={item[2]} deleteSize={props.deleteSize} />
                 
               );
             })}

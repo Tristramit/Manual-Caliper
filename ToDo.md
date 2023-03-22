@@ -4,11 +4,9 @@
 
 ## Objectives
 
+Change sizeItems to objects (from array)
+
 - ## Settings Screen
-  - ** Move States to Redux **
-
-
-
 
 
 
@@ -19,26 +17,26 @@
 
 - ## Measurements screen
    - Hide / Unhide input according to the state of the switches in the settings screen
-   -  Remove unused styles
+   -  ~~Remove unused styles~~
 
 - ## Permissions Pages and Splash Screen
 
     - Set startup Permissions page
 
-- ## Sharing
+- ## ~~Sharing~~
     Links
   - https://docs.expo.dev/versions/latest/sdk/sharing/
 
-- ## Splash Screen
+- ## ~~Splash Screen~~
   -~~ https://docs.expo.dev/versions/v48.0.0/sdk/splash-screen/~~
 
 
 ##Questions and unresolved bugs
-  - ## Why can't I export default?
 
 
 ## Ideas
   - ## Show normal distribution?
+
 
 
 

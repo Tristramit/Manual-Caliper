@@ -4,16 +4,18 @@ import { Button, Text, View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
+import { arrayToCsv } from '../utils/functions';
 
-export function ShareScreen() {
+export function ShareScreen(props) {
   const [state, setState] = useState();
   const fileUri = FileSystem.cacheDirectory + "test.csv";
-  const csv = `Size,Latitude,Longitude
-  17.13,39.4624999,-0.3726951
-  30.34,39.4624999,-0.3726951
-  37.82,39.4624999,-0.3726951
-  54.13,39.4624999,-0.3726951`;
-
+  // const csv = `Size,Latitude,Longitude
+  // 17.13,39.4624999,-0.3726951
+  // 30.34,39.4624999,-0.3726951
+  // 37.82,39.4624999,-0.3726951
+  // 54.13,39.4624999,-0.3726951`;
+  const csv = arrayToCsv(props.sizeItems);
+  console.debug("csv: ", csv);
   
 
   useEffect(() => {
