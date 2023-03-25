@@ -43,7 +43,8 @@ const Size = (props) => {
       {/* <Icon name="My Icon" /> */}
       <ListItem.Content>
         <ListItem.Title style={{ color: theme.colors.black }}>
-          {console.log("props.text is: ", props.text)}
+        {/* {console.count()} */}
+
           {props.text}
         </ListItem.Title>
       </ListItem.Content>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   View,
   Text,
@@ -13,9 +13,19 @@ import {
 } from "react-native";
 import Size from "../components/Size.js";
 
-
-
 export function MeasurementsScreen(props) {
+  const memoizedSizeItems = useMemo(() => {
+    return props.sizeItems.map((item) => (
+      <Size
+        text={item[0]}
+        key={item[3]}
+        id={item[3]}
+        longitude={item[1]}
+        latitude={item[2]}
+        deleteSize={props.deleteSize}
+      />
+    ));
+  }, [props.sizeItems]);
 
   return (
     <View style={styles.container}>
@@ -26,22 +36,9 @@ export function MeasurementsScreen(props) {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.sizesWrapper}>
-          <Text style={styles.sectionTitle}>Measurements</Text>
           <Text>Number of samples is: {props.sizeItems.length} </Text>
           <Text>The Current Average is: {props.itemsAverage} </Text>
-          <View style={styles.items}>
-            {/* This is where the sizes will go */}
-            {props.sizeItems.map((item) => {
-              return (
-          
-                  <Size text={item[0]} key={item[3]} id={item[3]} longitude={item[1]} latitude={item[2]} deleteSize={props.deleteSize} />
-                
-              );
-            })}
-            {props.sizeItemsList}
-          </View>
-         
-          
+          <View style={styles.items}>{memoizedSizeItems}</View>
         </View>
       </ScrollView>
 
@@ -65,23 +62,22 @@ export function MeasurementsScreen(props) {
 
 const styles = StyleSheet.create({
   sizesWrapper: {
-    paddingTop: 80,
+    paddingTop: 30,
     paddingHorizontal: 20,
     // alignItems: "center",
   },
   container: {
-    flex: 1, 
-    // alignItems: "center", 
-    justifyContent: "center" },
+    flex: 1,
+    // alignItems: "center",
+    justifyContent: "center",
+  },
 
   sectionTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    
   },
   items: {
     marginTop: 30,
-    
   },
   writeSizeWrapper: {
     position: "absolute",

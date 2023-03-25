@@ -4,7 +4,9 @@
 
 ## Objectives
 
-Change sizeItems to objects (from array)
+- Change sizeItems to objects (from array)
+- Save sizeItems locally until update
+  
 
 - ## Settings Screen
 
