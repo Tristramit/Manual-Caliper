@@ -1,68 +1,54 @@
-//====================================================================To Do: ====================================================================
-// 1. Add a button to the right of the size/Swipe left that will allow the user to delete the size and update the average
-//
-
-// ===============================================================================================================================================
-
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { ListItem, Button, useTheme, Dialog } from "@rneui/themed";
 
 const Size = (props) => {
-  const index = props.id;
+  const { theme } = useTheme();
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const toggleDialog = () => {
+    setDialogVisible(!dialogVisible);
+  };
+
   return (
-    <TouchableOpacity key={props.id} onPress={() => props.deleteSize(props.id)}>
-      <View style={styles.item}>
-        <View style={styles.itemLeft}>
-          <Text style={styles.itemSize} numberOfLines={1}>
-            {props.text}
-          </Text>
+    <ListItem.Swipeable
+      key={props.id}
+      bottomDivider={true}
+      containerStyle={{ backgroundColor: theme.colors.white, width: "100%" }}
+      leftContent={(reset) => (
+        
+        <View>
+          <Button
+            title="Info"
+            onPress={ toggleDialog}
+            icon={{ name: "info", color: "white" }}
+            buttonStyle={{ minHeight: "100%" }}
+          />
+          <Dialog isVisible={dialogVisible} onBackdropPress={toggleDialog}>
+            <Dialog.Title title={`Measurement ${props.text}`}/>
+            <Text>Longitude is: {props.longitude}</Text>
+            <Text>Latitude is: {props.latitude}</Text>
+            <Text>ID is: {props.id} </Text>
+          </Dialog>
         </View>
-        <View style={styles.itemLeft}>
-          <Text style={styles.itemText}>{props.longitude}</Text>
-          <Text style={styles.itemText}>{props.latitude}</Text>
-          <Text style={styles.itemText}>{props.id}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
+      )}
+      rightContent={(reset) => (
+        <Button
+          title="Delete"
+          onPress={() => props.deleteSize(props.id)}
+          icon={{ name: "delete", color: "white" }}
+          buttonStyle={{ minHeight: "100%", backgroundColor: "red" }}
+        />
+      )}
+    >
+      {/* <Icon name="My Icon" /> */}
+      <ListItem.Content>
+        <ListItem.Title style={{ color: theme.colors.black }}>
+          {console.log("props.text is: ", props.text)}
+          {props.text}
+        </ListItem.Title>
+      </ListItem.Content>
+    </ListItem.Swipeable>
   );
 };
-
-const styles = StyleSheet.create({
-  item: {
-    backgroundColor: "#ffffff",
-    padding: 15,
-    borderRadius: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 2,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  itemLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    flexWrap: "wrap",
-    marginRight: 20,
-  },
-  itemText: {
-    maxWidth: "93%",
-    fontSize: 8,
-    marginBottom: 5,
-    marginRight: 10,
-  },
-  itemSize: {
-    maxWidth: "93%",
-    fontSize: 16,
-    marginBottom: 5,
-    marginRight: 10,
-  },
-});
 
 export default Size;

@@ -1,5 +1,11 @@
 //React
-import React, { useCallback, useEffect, useState, useContext, createContext } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  useContext,
+  createContext,
+} from "react";
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -15,6 +21,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import * as Sharing from "expo-sharing";
 import * as Location from "expo-location";
+import { ThemeProvider } from "@rneui/themed";
 
 //Screens
 import { HomeScreen } from "./src/screens/HomeScreen.js";
@@ -23,27 +30,28 @@ import { MeasurementsScreen } from "./src/screens/MeasurementsScreen.js";
 import { ShareScreen } from "./src/screens/ShareScreen.js";
 import { NavigationContainer } from "@react-navigation/native";
 
-
 //Utils
-import { extractNumbers, average, sizesArray, currentTimeString } from "./src/utils/functions.js";
-//import styles from './src/utils/styles'; Should make a styles file and import it here. 
-
+import {
+  extractNumbers,
+  average,
+  sizesArray,
+  currentTimeString,
+} from "./src/utils/functions.js";
+//import styles from './src/utils/styles'; Should make a styles file and import it here.
 
 const Drawer = createDrawerNavigator();
 const config = require("./src/config/config.json");
-const SizeContext = createContext()
+const SizeContext = createContext();
 
 export default function App() {
-
-//States
+  //States
   const [settingState, setSettingState] = useState(config);
   const [size, setSize] = useState();
   const [sizeItems, setSizeItems] = useState([]);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
-
-//Handlers
+  //Handlers
 
   const handlers = {
     handleVibrate: () => {
@@ -67,8 +75,10 @@ export default function App() {
     long = location.coords.longitude;
     location = "Latitude: " + lat + " Longitude: " + long;
     setLocation(location);
-    setSizeItems([...sizeItems, [extractNumbers(size), lat, long, currentTimeString()]]);
-
+    setSizeItems([
+      ...sizeItems,
+      [extractNumbers(size), lat, long, currentTimeString()],
+    ]);
 
     if (settingState.vibrate) {
       Vibration.vibrate(100);
@@ -83,22 +93,11 @@ export default function App() {
     setSize(null);
   };
 
-  // const deleteSize = (index) => {
-  //   let itemsCopy = [...sizeItems];
-  //   itemsCopy.splice(index, 1);
-  //   setSizeItems(itemsCopy);
-  // };
-
-  // const deleteSize = (id) => {
-  //   console.log("Delete size called with id:", id);
-  //   setSizeItems(sizeItems.filter((sizeItems) => sizeItems.id !== id));
-  // };
   const deleteSize = (id) => {
     setSizeItems(sizeItems.filter((sizeItems) => sizeItems[3] !== id));
   };
 
-
-//Effects
+  //Hooks
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -109,49 +108,50 @@ export default function App() {
     })();
   }, []);
 
-//Constants
+  //Constants
   const itemsLength = sizeItems.length;
   const itemsAverage = average(sizesArray(sizeItems));
- 
 
   return (
-    <View style={styles.container}>
-      <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Measurements">
-          <Drawer.Screen name="Home">
-            {(props) => <HomeScreen {...props} sizeItems={sizeItems} />}
-          </Drawer.Screen>
-          <Drawer.Screen name="Share">
-            {(props) => <ShareScreen {...props} sizeItems={sizeItems} />}
-          </Drawer.Screen>
-          <Drawer.Screen name="Settings">
-            {(props) => (
-              <SettingsScreen
-                {...props}
-                state={settingState}
-                handlers={handlers}
-              />
-            )}
-          </Drawer.Screen>
-          <Drawer.Screen name="Measurements">
-            {(props) => (
-              <MeasurementsScreen
-                {...props}
-                settingState={settingState}
-                handleAddSize={handleAddSize}
-                deleteSize={deleteSize}
-                itemsLength={itemsLength}
-                itemsAverage={itemsAverage}
-                sizeItems={sizeItems}
-                location={location}
-                size={size}
-                setSize={setSize}
-              />
-            )}
-          </Drawer.Screen>
-        </Drawer.Navigator>
-      </NavigationContainer>
-    </View>
+    <ThemeProvider>
+      <View style={styles.container}>
+        <NavigationContainer>
+          <Drawer.Navigator initialRouteName="Measurements">
+            <Drawer.Screen name="Home">
+              {(props) => <HomeScreen {...props} sizeItems={sizeItems} />}
+            </Drawer.Screen>
+            <Drawer.Screen name="Share">
+              {(props) => <ShareScreen {...props} sizeItems={sizeItems} />}
+            </Drawer.Screen>
+            <Drawer.Screen name="Settings">
+              {(props) => (
+                <SettingsScreen
+                  {...props}
+                  state={settingState}
+                  handlers={handlers}
+                />
+              )}
+            </Drawer.Screen>
+            <Drawer.Screen name="Measurements">
+              {(props) => (
+                <MeasurementsScreen
+                  {...props}
+                  settingState={settingState}
+                  handleAddSize={handleAddSize}
+                  deleteSize={deleteSize}
+                  itemsLength={itemsLength}
+                  itemsAverage={itemsAverage}
+                  sizeItems={sizeItems}
+                  location={location}
+                  size={size}
+                  setSize={setSize}
+                />
+              )}
+            </Drawer.Screen>
+          </Drawer.Navigator>
+        </NavigationContainer>
+      </View>
+    </ThemeProvider>
   );
 }
 const styles = StyleSheet.create({

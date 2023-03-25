@@ -9,12 +9,7 @@ import {
   VictoryAxis,
 } from "victory-native";
 import { sizesArray } from "../utils/functions";
-// 
-// const values = [
-//   60.67, 64.86, 60.8, 75.7, 68.61, 67.69, 63.81, 62.16, 74.95, 71.52, 64.1,
-//   59.12, 62.75, 70.53, 62.51, 78.02, 68.98, 74.08, 60.25, 70.67, 67.81, 71.04,
-//   58.9,
-// ];
+
 
 
 export default function DistributionGraph(props) {

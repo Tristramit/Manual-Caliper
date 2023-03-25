@@ -12,7 +12,7 @@ import {
   Vibration,
 } from "react-native";
 import Size from "../components/Size.js";
-import { currentTimeString } from "../utils/functions.js";
+
 
 
 export function MeasurementsScreen(props) {
@@ -67,11 +67,11 @@ const styles = StyleSheet.create({
   sizesWrapper: {
     paddingTop: 80,
     paddingHorizontal: 20,
-    alignItems: "center",
+    // alignItems: "center",
   },
   container: {
     flex: 1, 
-    alignItems: "center", 
+    // alignItems: "center", 
     justifyContent: "center" },
 
   sectionTitle: {
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center",
+    // alignItems: "center",
   },
   input: {
     paddingVertical: 15,
