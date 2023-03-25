@@ -9,22 +9,22 @@ const Size = (props) => {
     setDialogVisible(!dialogVisible);
   };
 
+
   return (
     <ListItem.Swipeable
       key={props.id}
       bottomDivider={true}
       containerStyle={{ backgroundColor: theme.colors.white, width: "100%" }}
       leftContent={(reset) => (
-        
         <View>
           <Button
             title="Info"
-            onPress={ toggleDialog}
+            onPress={toggleDialog}
             icon={{ name: "info", color: "white" }}
             buttonStyle={{ minHeight: "100%" }}
           />
           <Dialog isVisible={dialogVisible} onBackdropPress={toggleDialog}>
-            <Dialog.Title title={`Measurement ${props.text}`}/>
+            <Dialog.Title title={`Measurement ${props.text}`} />
             <Text>Longitude is: {props.longitude}</Text>
             <Text>Latitude is: {props.latitude}</Text>
             <Text>ID is: {props.id} </Text>
@@ -40,11 +40,8 @@ const Size = (props) => {
         />
       )}
     >
-      {/* <Icon name="My Icon" /> */}
       <ListItem.Content>
         <ListItem.Title style={{ color: theme.colors.black }}>
-        {/* {console.count()} */}
-
           {props.text}
         </ListItem.Title>
       </ListItem.Content>

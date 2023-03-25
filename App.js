@@ -41,7 +41,7 @@ import {
 
 const Drawer = createDrawerNavigator();
 const config = require("./src/config/config.json");
-const SizeContext = createContext();
+
 
 export default function App() {
   //States

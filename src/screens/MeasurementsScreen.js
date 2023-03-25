@@ -14,6 +14,7 @@ import {
 import Size from "../components/Size.js";
 
 export function MeasurementsScreen(props) {
+
   const memoizedSizeItems = useMemo(() => {
     return props.sizeItems.map((item) => (
       <Size
