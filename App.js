@@ -37,15 +37,18 @@ import {
   sizesArray,
   currentTimeString,
 } from "./src/utils/functions.js";
-//import styles from './src/utils/styles'; Should make a styles file and import it here.
+import useSettingsStore from "./src/store/settingsStore.js";
+import useSampleStore from "./src/store/sampleStore.js";
 
 const Drawer = createDrawerNavigator();
-const config = require("./src/config/config.json");
+
 
 
 export default function App() {
+  const settingsState = useSettingsStore()
+  const sampleState = useSampleStore()
+
   //States
-  const [settingState, setSettingState] = useState(config);
   const [size, setSize] = useState();
   const [sizeItems, setSizeItems] = useState([]);
   const [location, setLocation] = useState(null);
@@ -53,20 +56,6 @@ export default function App() {
 
   //Handlers
 
-  const handlers = {
-    handleVibrate: () => {
-      setSettingState({ ...settingState, vibrate: !settingState.vibrate });
-    },
-    handleSound: () => {
-      setSettingState({ ...settingState, sound: !settingState.sound });
-    },
-    handleFlash: () => {
-      setSettingState({ ...settingState, flash: !settingState.flash });
-    },
-    handleDarkMode: () => {
-      setSettingState({ ...settingState, darkMode: !settingState.darkMode });
-    },
-  };
 
   const handleAddSize = async () => {
     let location = await Location.getCurrentPositionAsync({});
@@ -79,21 +68,17 @@ export default function App() {
       ...sizeItems,
       [extractNumbers(size), lat, long, currentTimeString()],
     ]);
+    if (settingsState.vibrate) {
+      Vibration.vibrate(50);
+    }
 
-    if (settingState.vibrate) {
-      Vibration.vibrate(100);
-    }
-    //if (props.settingsState.sound) {
-    //play sound
-    //}
-    if (settingState.flash) {
-      //flash screen
-    }
+
 
     setSize(null);
   };
 
   const deleteSize = (id) => {
+    console.log('id: ', id );
     setSizeItems(sizeItems.filter((sizeItems) => sizeItems[3] !== id));
   };
 
@@ -127,8 +112,7 @@ export default function App() {
               {(props) => (
                 <SettingsScreen
                   {...props}
-                  state={settingState}
-                  handlers={handlers}
+
                 />
               )}
             </Drawer.Screen>
@@ -136,7 +120,6 @@ export default function App() {
               {(props) => (
                 <MeasurementsScreen
                   {...props}
-                  settingState={settingState}
                   handleAddSize={handleAddSize}
                   deleteSize={deleteSize}
                   itemsLength={itemsLength}

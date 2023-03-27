@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { ListItem, Button, useTheme, Dialog } from "@rneui/themed";
+//import  useSampleStore from "../store/sampleStore";
 
 const Size = (props) => {
+  //console.log('from Size.js=>Props: ', props);
+  // const { deleteSize } = useSampleStore();
   const { theme } = useTheme();
   const [dialogVisible, setDialogVisible] = useState(false);
   const toggleDialog = () => {

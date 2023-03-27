@@ -6,6 +6,7 @@
 
 - Change sizeItems to objects (from array)
 - Save sizeItems locally until update
+- Create permission dialog on Startup
   
 
 - ## Settings Screen

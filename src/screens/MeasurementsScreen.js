@@ -12,8 +12,10 @@ import {
   Vibration,
 } from "react-native";
 import Size from "../components/Size.js";
+import useSampleStore from "../store/sampleStore.js";
 
 export function MeasurementsScreen(props) {
+  //const useSampleStore = useSampleStore();
 
   const memoizedSizeItems = useMemo(() => {
     return props.sizeItems.map((item) => (

@@ -1,17 +1,22 @@
+import React, { useEffect, useState } from "react";
+import { Button, Text, View, StyleSheet } from "react-native";
+import Constants from "expo-constants";
+import * as Sharing from "expo-sharing";
+import * as FileSystem from "expo-file-system";
+import { arrayToCsv } from "../utils/functions";
+// import useSampleStore from "../store/sampleStore.js";
 
-import React, { useEffect, useState } from 'react';
-import { Button, Text, View, StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
-import * as Sharing from 'expo-sharing';
-import * as FileSystem from 'expo-file-system';
-import { arrayToCsv } from '../utils/functions';
+// const handleAddSize = useSampleStore((state) => state.handleAddSize);
 
 export function ShareScreen(props) {
+
+
   const [state, setState] = useState();
   const fileUri = FileSystem.cacheDirectory + "test.csv";
 
+  // const { handleAddSize } = useSampleStore();
+
   const csv = arrayToCsv(props.sizeItems);
-  
 
   useEffect(() => {
     Sharing.isAvailableAsync().then((available) => {
@@ -25,9 +30,9 @@ export function ShareScreen(props) {
 
   const handleSharePress = () => {
     const options = {
-      mimeType: 'text/csv',
-      dialogTitle: 'Share CSV',
-      UTI: 'text/csv',
+      mimeType: "text/csv",
+      dialogTitle: "Share CSV",
+      UTI: "text/csv",
     };
 
     FileSystem.writeAsStringAsync(fileUri, csv)
@@ -54,6 +59,7 @@ export function ShareScreen(props) {
       <Text style={styles.paragraph}>{state}</Text>
       {/* <Text style={styles.paragraph}>{fileUri}</Text> */}
       <Button title="Share" onPress={handleSharePress} />
+      {/* <Button title="Get Location" onPress={handleAddSize} /> */}
     </View>
   );
 }
@@ -61,15 +67,15 @@ export function ShareScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
+    backgroundColor: "#ecf0f1",
     padding: 8,
   },
   paragraph: {
     margin: 24,
     fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
