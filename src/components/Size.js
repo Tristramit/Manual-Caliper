@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useContext } from "react";
+import { View, Text} from "react-native";
+import { SampleContext } from "../contexts/AddSampleContext";
 import { ListItem, Button, useTheme, Dialog } from "@rneui/themed";
-//import  useSampleStore from "../store/sampleStore";
 
 const Size = (props) => {
-  //console.log('from Size.js=>Props: ', props);
-  // const { deleteSize } = useSampleStore();
   const { theme } = useTheme();
   const [dialogVisible, setDialogVisible] = useState(false);
   const toggleDialog = () => {
     setDialogVisible(!dialogVisible);
   };
+  const { deleteSize } = useContext(SampleContext);
 
 
   return (
@@ -28,6 +27,7 @@ const Size = (props) => {
           />
           <Dialog isVisible={dialogVisible} onBackdropPress={toggleDialog}>
             <Dialog.Title title={`Measurement ${props.text}`} />
+            {console.log(props)}
             <Text>Longitude is: {props.longitude}</Text>
             <Text>Latitude is: {props.latitude}</Text>
             <Text>ID is: {props.id} </Text>
@@ -37,7 +37,7 @@ const Size = (props) => {
       rightContent={(reset) => (
         <Button
           title="Delete"
-          onPress={() => props.deleteSize(props.id)}
+          onPress={() => deleteSize(props.id)}
           icon={{ name: "delete", color: "white" }}
           buttonStyle={{ minHeight: "100%", backgroundColor: "red" }}
         />

@@ -17,9 +17,11 @@ export function extractNumbers(size) {
       .replace(separator, ".")
       .replace(/[^0-9.](?![^0-9]*separator)/g, "");
     //console.log("size is " + size)
-    //console.log("Decimal String is " + decimalStr);
+    console.log("Decimal String is " + decimalStr);
+    console.log("Type of decimalStr is " + typeof decimalStr);
     //console.log("ParseFloat is " + parseFloat(decimalStr));
-    return parseFloat(decimalStr);
+    // return parseFloat(decimalStr);
+    return decimalStr;
   }
   return null;
 }

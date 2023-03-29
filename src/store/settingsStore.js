@@ -12,3 +12,4 @@ const useSettingsStore = create((set) => ({
 }));
 
 export default useSettingsStore;
+

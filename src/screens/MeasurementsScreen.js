@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 import {
   View,
   Text,
@@ -12,23 +12,40 @@ import {
   Vibration,
 } from "react-native";
 import Size from "../components/Size.js";
-import useSampleStore from "../store/sampleStore.js";
+import { styles } from "../styles/styles.js";
+import { SampleContext } from "../contexts/AddSampleContext.js";
+import { extractNumbers } from "../utils/functions";
+
 
 export function MeasurementsScreen(props) {
-  //const useSampleStore = useSampleStore();
+  const {
+    size,
+    setSize,
+    sizeItems,
+    setSizeItems,
+    location,
+    setLocation,
+    errorMsg,
+    setErrorMsg,
+    handleAddSize,
+    deleteSize,
+    itemsAverage,
+  } = useContext(SampleContext);
+console.log("sizeItems", sizeItems);
+console.log("itemsAverage", itemsAverage);
 
   const memoizedSizeItems = useMemo(() => {
-    return props.sizeItems.map((item) => (
+    return sizeItems.map((item) => (
       <Size
-        text={item[0]}
-        key={item[3]}
-        id={item[3]}
-        longitude={item[1]}
-        latitude={item[2]}
-        deleteSize={props.deleteSize}
+        text={item.size}
+        key={item.id}
+        id={item.id}
+        longitude={item.longitude}
+        latitude={item.latitude}
+        // deleteSize={deleteSize}
       />
     ));
-  }, [props.sizeItems]);
+  }, [sizeItems]);
 
   return (
     <View style={styles.container}>
@@ -39,8 +56,8 @@ export function MeasurementsScreen(props) {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.sizesWrapper}>
-          <Text>Number of samples is: {props.sizeItems.length} </Text>
-          <Text>The Current Average is: {props.itemsAverage} </Text>
+          <Text>Number of samples is: {sizeItems.length} </Text>
+          <Text>The Current Average is: {itemsAverage} </Text>
           <View style={styles.items}>{memoizedSizeItems}</View>
         </View>
       </ScrollView>
@@ -48,13 +65,15 @@ export function MeasurementsScreen(props) {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeSizeWrapper}
-        onSubmitEditing={() => props.handleAddSize()}
+        onSubmitEditing={() => handleAddSize()}
       >
         <TextInput
           blurOnSubmit={false}
           style={styles.input}
-          value={props.size}
-          onChangeText={(text) => props.setSize(text)}
+          value={size}
+          //Should change this so screen doesn't rerender on every keystroke
+
+          onChangeText={(text) => setSize(text)}
           autoFocus={true}
           showSoftInputOnFocus={false}
         />
@@ -62,41 +81,3 @@ export function MeasurementsScreen(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  sizesWrapper: {
-    paddingTop: 30,
-    paddingHorizontal: 20,
-    // alignItems: "center",
-  },
-  container: {
-    flex: 1,
-    // alignItems: "center",
-    justifyContent: "center",
-  },
-
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  items: {
-    marginTop: 30,
-  },
-  writeSizeWrapper: {
-    position: "absolute",
-    bottom: 60,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    // alignItems: "center",
-  },
-  input: {
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    backgroundColor: "#FFF",
-    borderRadius: 60,
-    borderColor: "#C0C0C0",
-    borderWidth: 1,
-    width: 250,
-  },
-});

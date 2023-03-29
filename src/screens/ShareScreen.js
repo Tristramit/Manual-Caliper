@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Text, View, StyleSheet } from "react-native";
-import Constants from "expo-constants";
+import { Button, Text, View } from "react-native";
 import * as Sharing from "expo-sharing";
 import * as FileSystem from "expo-file-system";
 import { arrayToCsv } from "../utils/functions";
-// import useSampleStore from "../store/sampleStore.js";
+import { styles } from "../styles/styles";
 
-// const handleAddSize = useSampleStore((state) => state.handleAddSize);
 
 export function ShareScreen(props) {
 
@@ -64,18 +62,3 @@ export function ShareScreen(props) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "space-around",
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: "#ecf0f1",
-    padding: 8,
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-});

@@ -1,16 +1,13 @@
 import React from "react";
-import { AppRegistry, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   VictoryBar,
-  VictoryHistogram,
   VictoryChart,
   VictoryTheme,
-  VictoryLabel,
   VictoryAxis,
 } from "victory-native";
 import { sizesArray } from "../utils/functions";
-
-
+import { styles } from "../styles/styles";
 
 export default function DistributionGraph(props) {
   const values = props.values ? props.values : [];
@@ -34,7 +31,6 @@ export default function DistributionGraph(props) {
 
   const binArray = Object.keys(bins).map((item) => Number(item));
 
-
   return (
     <View style={styles.container}>
       <VictoryChart
@@ -42,7 +38,6 @@ export default function DistributionGraph(props) {
         theme={VictoryTheme.material}
         domainPadding={20}
       >
-        {/* <VictoryAxis tickValues={[56,60,64,68,72,76]} tickFormat={[56,60,64,68,72,76]} /> */}
         <VictoryAxis tickValues={binArray} tickFormat={binArray} />
         <VictoryBar
           data={binData}
@@ -58,12 +53,3 @@ export default function DistributionGraph(props) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5fcff",
-    width: 350,
-  },
-});
