@@ -16,21 +16,20 @@ export function extractNumbers(size) {
     const decimalStr = size
       .replace(separator, ".")
       .replace(/[^0-9.](?![^0-9]*separator)/g, "");
-    //console.log("size is " + size)
-    console.log("Decimal String is " + decimalStr);
-    console.log("Type of decimalStr is " + typeof decimalStr);
-    //console.log("ParseFloat is " + parseFloat(decimalStr));
-    // return parseFloat(decimalStr);
-    return decimalStr;
+    return parseFloat(decimalStr);
+    //return decimalStr;
   }
   return null;
 }
 
-//Average function for array of numbers
-export function average(arr) {
-  const sum = arr.reduce((a, b) => a + b, 0);
-  const avg = (sum / arr.length).toFixed(2) || 0;
-  return avg;
+
+export function calculateAverageSize(objects) {
+  let totalSize = null;
+  for (let i = 0; i < objects.length; i++) {
+    totalSize += objects[i].size;
+  }
+  const avg = totalSize / objects.length;
+  return avg.toFixed(2);
 }
 
 //Flash screen function
@@ -66,14 +65,23 @@ export async function playSound() {
   }
 }
 
+//No longer used
 export function sizesArray(SizesList) {
   return SizesList.map((subarray) => subarray[0]);
 }
 
-export function arrayToCsv(array) {
-  const headers = "Size, Latitude, Longitude";
+
+export function arrayToCsv(obj) {
+  const headers = "Size, Latitude, Longitude, id";
   return (
-    headers + "\n" + array.map((subarray) => subarray.join(",")).join("\n")
+    headers +
+    "\n" +
+    obj
+      .map((obj) => {
+        const values = Object.values(obj);
+        return values.join(",");
+      })
+      .join("\n")
   );
 }
 

@@ -1,9 +1,14 @@
+// This context is used to add a sample to the list of samples
+// At first I used Zustand but I found it to be overkill for what I needed
+
+
 import React, { createContext, useContext, useState } from "react";
 import {
   extractNumbers,
   currentTimeString,
   average,
   sizesArray,
+  calculateAverageSize
 } from "../utils/functions";
 import * as Location from "expo-location";
 import { SettingsContext } from "./SettingsContext";
@@ -14,7 +19,6 @@ export const SampleContext = createContext();
 export const SampleProvider = ({ children }) => {
 
   const { settings } = useContext(SettingsContext); 
-  console.log("settings: ", settings);
 
   const [size, setSize] = useState();
   const [sizeItems, setSizeItems] = useState([]);
@@ -30,7 +34,7 @@ export const SampleProvider = ({ children }) => {
     setLocation(location);
     setSizeItems([
       ...sizeItems,
-      {size: extractNumbers(size),latitude: lat,longitude: long,id: currentTimeString()},
+      {size: extractNumbers(size),latitude: lat,longitude: long,id: currentTimeString()}
     ]);
     if (settings.vibrate) {
        Vibration.vibrate(50);
@@ -40,14 +44,14 @@ export const SampleProvider = ({ children }) => {
   };
 
   const deleteSize = (id) => {
-    console.log("deleteSize activated on: ", id);
     setSizeItems(sizeItems.filter((sizeItems) => sizeItems.id !== id));
   };
 
   //Constants
   //Move to contexts later
   const itemsLength = sizeItems.length;
-  const itemsAverage = average(sizesArray(sizeItems));
+  // const itemsAverage = average(sizesArray(sizeItems));
+  const itemsAverage = calculateAverageSize(sizeItems);
 
   return (
     <SampleContext.Provider

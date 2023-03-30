@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { StyleSheet, View } from "react-native";
 import {
   VictoryBar,
@@ -8,22 +8,25 @@ import {
 } from "victory-native";
 import { sizesArray } from "../utils/functions";
 import { styles } from "../styles/styles";
+import { SampleContext } from "../contexts/AddSampleContext.js";
 
-export default function DistributionGraph(props) {
-  const values = props.values ? props.values : [];
+
+export default function DistributionGraph() {
+  const {sizeItems} = useContext(SampleContext);
+
   const binSize = 4;
   const bins = {};
-  if (props.values) {
-    sizesArray(props.values).forEach((value) => {
+  if (sizeItems) {
+    sizeItems.forEach((value) => {
       // Round size down to nearest bin size
-      const bin = Math.floor(value / binSize) * binSize;
+      const bin = Math.floor(value.size / binSize) * binSize;
       // If bin exists, increment count, otherwise create bin
       bins[bin] = bins[bin] ? bins[bin] + 1 : 1;
     });
   }
 
   // Calculate percentages
-  const totalCount = values.length;
+  const totalCount = sizeItems.length;
   const binData = Object.entries(bins).map(([bin, count]) => {
     const percentage = parseFloat(((count / totalCount) * 100).toFixed(2));
     return { Bin: Number(bin), Percentage: percentage };

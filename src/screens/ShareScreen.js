@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from "react";
+//This screen is only for testing the share function, it could be used in a different screen later
+
+
+import React, { useEffect, useState, useContext } from "react";
 import { Button, Text, View } from "react-native";
 import * as Sharing from "expo-sharing";
 import * as FileSystem from "expo-file-system";
 import { arrayToCsv } from "../utils/functions";
 import { styles } from "../styles/styles";
+import { SampleContext } from "../contexts/AddSampleContext.js";
 
 
 export function ShareScreen(props) {
+  const {sizeItems} = useContext(SampleContext);
 
 
   const [state, setState] = useState();
   const fileUri = FileSystem.cacheDirectory + "test.csv";
 
-  // const { handleAddSize } = useSampleStore();
 
-  const csv = arrayToCsv(props.sizeItems);
+  const csv = arrayToCsv(sizeItems);
 
   useEffect(() => {
     Sharing.isAvailableAsync().then((available) => {
@@ -55,9 +59,7 @@ export function ShareScreen(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.paragraph}>{state}</Text>
-      {/* <Text style={styles.paragraph}>{fileUri}</Text> */}
       <Button title="Share" onPress={handleSharePress} />
-      {/* <Button title="Get Location" onPress={handleAddSize} /> */}
     </View>
   );
 }

@@ -27,7 +27,6 @@ const Size = (props) => {
           />
           <Dialog isVisible={dialogVisible} onBackdropPress={toggleDialog}>
             <Dialog.Title title={`Measurement ${props.text}`} />
-            {console.log(props)}
             <Text>Longitude is: {props.longitude}</Text>
             <Text>Latitude is: {props.latitude}</Text>
             <Text>ID is: {props.id} </Text>

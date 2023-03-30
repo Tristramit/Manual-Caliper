@@ -2,37 +2,18 @@ import React, { useMemo, useContext } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
   TextInput,
-  TouchableOpacity,
-  Keyboard,
   Platform,
-  Vibration,
 } from "react-native";
 import Size from "../components/Size.js";
 import { styles } from "../styles/styles.js";
 import { SampleContext } from "../contexts/AddSampleContext.js";
-import { extractNumbers } from "../utils/functions";
 
-
-export function MeasurementsScreen(props) {
-  const {
-    size,
-    setSize,
-    sizeItems,
-    setSizeItems,
-    location,
-    setLocation,
-    errorMsg,
-    setErrorMsg,
-    handleAddSize,
-    deleteSize,
-    itemsAverage,
-  } = useContext(SampleContext);
-console.log("sizeItems", sizeItems);
-console.log("itemsAverage", itemsAverage);
+export function MeasurementsScreen() {
+  const { size, setSize, sizeItems, handleAddSize, itemsAverage } =
+    useContext(SampleContext);
 
   const memoizedSizeItems = useMemo(() => {
     return sizeItems.map((item) => (
@@ -42,7 +23,6 @@ console.log("itemsAverage", itemsAverage);
         id={item.id}
         longitude={item.longitude}
         latitude={item.latitude}
-        // deleteSize={deleteSize}
       />
     ));
   }, [sizeItems]);
@@ -72,6 +52,7 @@ console.log("itemsAverage", itemsAverage);
           style={styles.input}
           value={size}
           //Should change this so screen doesn't rerender on every keystroke
+          //Also there's a library that listens to the keyboard so there's no need for input and could also run in background
 
           onChangeText={(text) => setSize(text)}
           autoFocus={true}

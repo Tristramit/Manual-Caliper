@@ -14,8 +14,7 @@ export function SettingsScreen() {
     handleFlash,
     handleDarkMode,
   } = useContext(SettingsContext);
-  console.log("SettingsScreen.js: ", settings);
-  console.log("SettingsScreen.js: ", handleVibrate, handleSound, handleFlash, handleDarkMode);
+
 
   const switchColors = {
     trackColor: { false: "#ddd ", true: "#81b0ff" },

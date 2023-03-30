@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Switch } from "react-native";
+import { View, Switch } from "react-native";
 import { styles } from "../styles/styles";
 
 export default function SwitchComponent(props) {
