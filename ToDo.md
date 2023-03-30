@@ -2,51 +2,21 @@
 
 #List of specs for the app
 
-## Objectives
+## To Do's
 
-- Change sizeItems to objects (from array)
 - Save sizeItems locally until update
 - Create permission dialog on Startup
+- Add sounds and flash
+- Save settings as cache
+- Add measurement units
   
 
-- ## Settings Screen
 
-
-
-    - **Add Vibrate and Sound Toggle Switches to settings**
-    Links - 
-    https://reactnative.dev/docs/vibration
-
-
-- ## Measurements screen
-   - Hide / Unhide input according to the state of the switches in the settings screen
-   -  ~~Remove unused styles~~
-
-- ## Permissions Pages and Splash Screen
-
-    - Set startup Permissions page
-
-- ## ~~Sharing~~
-    Links
-  - https://docs.expo.dev/versions/latest/sdk/sharing/
-
-- ## ~~Splash Screen~~
-  -~~ https://docs.expo.dev/versions/v48.0.0/sdk/splash-screen/~~
-
-
-##Questions and unresolved bugs
-
+##Issues and unresolved bugs
+  - Keystroke library not working
 
 ## Ideas
-  - ## Show normal distribution?
-
-
-
-
-
-
-
-
+  - ~~## Show normal distribution?~~
 
 
 
