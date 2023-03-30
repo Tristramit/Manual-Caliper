@@ -48,9 +48,7 @@ export const SampleProvider = ({ children }) => {
   };
 
   //Constants
-  //Move to contexts later
   const itemsLength = sizeItems.length;
-  // const itemsAverage = average(sizesArray(sizeItems));
   const itemsAverage = calculateAverageSize(sizeItems);
 
   return (
