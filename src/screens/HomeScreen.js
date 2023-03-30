@@ -1,24 +1,16 @@
-import * as React from "react";
-import { Pressable, View, Text, StyleSheet } from "react-native";
-import { Button } from "react-native-web";
-import { useNavigation } from "@react-navigation/native";
+import React, {useContext} from "react";
+import { View, StyleSheet } from "react-native";
 import DistributionGraph from "../components/DistributionGraph";
+import { styles } from "../styles/styles";
+
 
 export function HomeScreen() {
-  const navigation = useNavigation();
+
 
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
       <DistributionGraph />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

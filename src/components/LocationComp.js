@@ -1,7 +1,9 @@
+//This component is no longer used.
+
 import React, { useState, useEffect } from 'react';
-import { Platform, Text, View, StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
+import { Text, View } from 'react-native';
 import * as Location from 'expo-location';
+import { styles } from '../styles/styles';
 
 export default function LocationComp() {
   const [location, setLocation] = useState(null);
@@ -41,15 +43,3 @@ export default function LocationComp() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  paragraph: {
-    fontSize: 10,
-    textAlign: 'center',
-  },
-});

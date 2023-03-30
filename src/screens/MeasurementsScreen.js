@@ -1,76 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useContext } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
   TextInput,
-  TouchableOpacity,
-  Keyboard,
   Platform,
-  Vibration,
 } from "react-native";
-import { extractNumbers, average } from "../utils/functions.js";
 import Size from "../components/Size.js";
-import * as Location from "expo-location";
-import { set } from "react-native-reanimated";
+import { styles } from "../styles/styles.js";
+import { SampleContext } from "../contexts/AddSampleContext.js";
 
-export function MeasurementsScreen(props) {
-  const [size, setSize] = useState();
-  const [sizeItems, setSizeItems] = useState([]);
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
+export function MeasurementsScreen() {
+  const { size, setSize, sizeItems, handleAddSize, itemsAverage } =
+    useContext(SampleContext);
 
- // let audio = new Audio("../assets/sounds/bell.mp3")
-//  const [locationText, setLocationText] = useState();
-
-
-  //Get Location
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-    })();
-  }, []);
-
-  //Handlers
-
-  const handleAddSize = async () => {
-    let location = await Location.getCurrentPositionAsync({});
-    location = JSON.parse(JSON.stringify(location));
-    lat = location.coords.latitude
-    long = location.coords.longitude
-    location = 'Latitude: ' + lat + ' Longitude: ' + long
-    console.log(location)
-    setLocation(location)
-    setSizeItems([...sizeItems, [extractNumbers(size), location]]);
-    console.log(sizeItems);
-   
-    if (props.state.vibrate) {
-      Vibration.vibrate(100);
-    }
-    //if (props.sound) {
-    //play sound
-    //}
-    if (props.flash) {
-      //flash screen
-    }
-
-    setSize(null);
-  };
-
-  const deleteSize = (index) => {
-    let itemsCopy = [...sizeItems];
-    itemsCopy.splice(index, 1);
-    setSizeItems(itemsCopy);
-  };
+  const memoizedSizeItems = useMemo(() => {
+    return sizeItems.map((item) => (
+      <Size
+        text={item.size}
+        key={item.id}
+        id={item.id}
+        longitude={item.longitude}
+        latitude={item.latitude}
+      />
+    ));
+  }, [sizeItems]);
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={styles.container}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -78,21 +36,9 @@ export function MeasurementsScreen(props) {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.sizesWrapper}>
-          <Text style={styles.sectionTitle}>Measurements</Text>
-          <Text>Number of samples is: {sizeItems.length}</Text>
-          <Text>The Current Average is: {average(sizeItems.map(subarray=>subarray[0]))} </Text>
-          <View style={styles.items}>
-            {/* This is where the sizes will go */}
-            {sizeItems.map((item, index) => {
-              return (
-          
-                  <Size text={item[0]} key={index} location={item[1]} deleteSize={deleteSize} />
-                
-              );
-            })}
-          </View>
-         
-          
+          <Text>Number of samples is: {sizeItems.length} </Text>
+          <Text>The Current Average is: {itemsAverage} </Text>
+          <View style={styles.items}>{memoizedSizeItems}</View>
         </View>
       </ScrollView>
 
@@ -105,6 +51,9 @@ export function MeasurementsScreen(props) {
           blurOnSubmit={false}
           style={styles.input}
           value={size}
+          //Should change this so screen doesn't rerender on every keystroke
+          //Also there's a library that listens to the keyboard so there's no need for input and could also run in background
+
           onChangeText={(text) => setSize(text)}
           autoFocus={true}
           showSoftInputOnFocus={false}
@@ -113,37 +62,3 @@ export function MeasurementsScreen(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  sizesWrapper: {
-    paddingTop: 80,
-    paddingHorizontal: 20,
-    alignItems: "center",
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    
-  },
-  items: {
-    marginTop: 30,
-    
-  },
-  writeSizeWrapper: {
-    position: "absolute",
-    bottom: 60,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  input: {
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    backgroundColor: "#FFF",
-    borderRadius: 60,
-    borderColor: "#C0C0C0",
-    borderWidth: 1,
-    width: 250,
-  },
-});

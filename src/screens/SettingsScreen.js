@@ -1,87 +1,70 @@
-import React, {useState} from 'react';
-import { View, Text, StyleSheet, Switch } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import SwitchComponent from '../components/SwitchComponent';
-//import config from '../config/config.json';
-import { StatusBar } from 'expo-status-bar';
-//import styles from '../utils/styles';
+import React, { useContext } from "react";
+import { View, Text } from "react-native";
+import SwitchComponent from "../components/SwitchComponent";
+import { SettingsContext } from "../contexts/SettingsContext";
+
+import { styles } from "../styles/styles.js";
+
+export function SettingsScreen() {
+  
+  const {
+    settings,
+    handleVibrate,
+    handleSound,
+    handleFlash,
+    handleDarkMode,
+  } = useContext(SettingsContext);
 
 
+  const switchColors = {
+    trackColor: { false: "#ddd ", true: "#81b0ff" },
+    thumbColor: "#f4f3f4",
+    ios_backgroundColor: "#3e3e3e",
+  };
 
-export function SettingsScreen(props) {
-    const switchColors = {
-        trackColor:{ false: "#ddd ", true: "#81b0ff" },
-        thumbColor: "#f4f3f4",
-        ios_backgroundColor:"#3e3e3e"};
+  return (
+    <View>
+      {/* List of Settings */}
 
-    
-    return (
-        
-      
-        <View>
-        {/* List of Settings */}
+      {/* Vibrate */}
+      <View style={styles.switchContainer}>
+        <Text style={styles.text}>Vibrate</Text>
+        <SwitchComponent
+          value={settings.vibrate}
+          handleChange={handleVibrate}
+          switchColors={switchColors}
+        />
+      </View>
 
-         {/* Vibrate */}
-         <View style={styles.switchContainer}>
-            <Text style={styles.text}>Vibrate</Text>
-            <SwitchComponent 
-            value={props.state.vibrate}
-            handleChange={props.handlers.handleVibrate}
-            switchColors={switchColors}
-            />
-        </View>
+      {/* Sound */}
+      <View style={styles.switchContainer}>
+        <Text style={styles.text}>Sound</Text>
+        <SwitchComponent
+          value={settings.sound}
+          handleChange={handleSound}
+          switchColors={switchColors}
+        />
+      </View>
 
-        {/* Sound */}
-        <View style={styles.switchContainer}>
-            <Text style={styles.text}>Sound</Text>
-            <SwitchComponent 
-            value={props.state.sound}
-            handleChange={props.handlers.handleSound}
-            switchColors={switchColors}
-            />
-        </View>
+      {/* Flash */}
+      <View style={styles.switchContainer}>
+        <Text style={styles.text}>Flash</Text>
+        <SwitchComponent
+          value={settings.flash}
+          handleChange={handleFlash}
+          switchColors={switchColors}
+        />
+      </View>
 
-        {/* Flash */}
-        <View style={styles.switchContainer}>
-            <Text style={styles.text}>Flash</Text>
-            <SwitchComponent 
-            value={props.state.flash}
-            handleChange={props.handlers.handleFlash}
-            switchColors={switchColors}
-            />
-        </View>
-
-        {/* Dark Mode */}
-        <View style={styles.switchContainer}>
-            <Text style={styles.text}>Dark Mode</Text>
-            <SwitchComponent 
-            value={props.state.darkMode}
-            handleChange={props.handlers.handleDarkMode}
-            switchColors={switchColors}
-            />
-        </View>
-
-        
-        </View>
-        
-    );
-    }
-
-const styles = StyleSheet.create({
-    text: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: 'black',
-        padding: 10,
-
-    },
-    switchContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        width: '100%', 
-    
-    },} 
-    );
+      {/* Dark Mode */}
+      <View style={styles.switchContainer}>
+        <Text style={styles.text}>Dark Mode</Text>
+        <SwitchComponent
+          value={settings.darkMode}
+          handleChange={handleDarkMode}
+          switchColors={switchColors}
+        />
+      </View>
+    </View>
+  );
+}
