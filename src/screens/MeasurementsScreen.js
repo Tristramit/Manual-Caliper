@@ -10,6 +10,8 @@ import {
 import Size from "../components/Size.js";
 import { styles } from "../styles/styles.js";
 import { SampleContext } from "../contexts/AddSampleContext.js";
+import { MeasurementInput } from "../components/MeasurementInput.js";
+import { CurrentSampleStats } from "../components/CurrentSampleStats.js";
 
 export function MeasurementsScreen() {
   const { size, setSize, sizeItems, handleAddSize, itemsAverage } =
@@ -36,29 +38,12 @@ export function MeasurementsScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.sizesWrapper}>
-          <Text>Number of samples is: {sizeItems.length} </Text>
-          <Text>The Current Average is: {itemsAverage} </Text>
-          <View style={styles.items}>{memoizedSizeItems}</View>
+          <CurrentSampleStats />
+          
+         <View style={styles.items}>{memoizedSizeItems}</View>
         </View>
       </ScrollView>
-
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.writeSizeWrapper}
-        onSubmitEditing={() => handleAddSize()}
-      >
-        <TextInput
-          blurOnSubmit={false}
-          style={styles.input}
-          value={size}
-          //Should change this so screen doesn't rerender on every keystroke
-          //Also there's a library that listens to the keyboard so there's no need for input and could also run in background
-
-          onChangeText={(text) => setSize(text)}
-          autoFocus={true}
-          showSoftInputOnFocus={false}
-        />
-      </KeyboardAvoidingView>
+      <MeasurementInput />
     </View>
   );
 }

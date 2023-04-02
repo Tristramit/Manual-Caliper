@@ -39,7 +39,7 @@ export default function App() {
         <SampleProvider>
           <View style={styles.container}>
             <NavigationContainer>
-              <Drawer.Navigator initialRouteName="Measurements">
+              <Drawer.Navigator initialRouteName="Home">
                 <Drawer.Screen name="Home">
                   {(props) => <HomeScreen {...props} />}
                 </Drawer.Screen>
